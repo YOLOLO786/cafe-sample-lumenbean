@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LumenBean Café — Cozy artisan coffee & pastries</title>
+  <meta name="description" content="LumenBean Café — artisan coffee, craft pastries, cozy workspace. A sample portfolio site built for web developers to showcase a cafe design." />
+  <meta property="og:title" content="LumenBean Café — Cozy artisan coffee & pastries" />
+  <meta property="og:description" content="Sample cafe website (portfolio) — features menu, gallery, contact form and responsive layout." />
+  <meta name="theme-color" content="#F3EDE9" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================
+       LumenBean Cafe — single-file demo
+       Edit colors in :root to quickly change theme
+       ========================== */
+    :root{
+      --bg:#f7f3f0;            /* page background */
+      --card:#ffffff;          /* card backgrounds */
+      --accent:#b46a4a;       /* main warm accent */
+      --accent-dark:#7a3f2b;  /* darker accent */
+      --muted:#6b6b6b;        /* secondary text */
+      --glass: rgba(255,255,255,0.75);
+      --radius:14px;
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, #fff8f5 0%, transparent 10%),
+                  linear-gradient(180deg,#f7f3f0 0%, #f0edea 100%);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding-bottom:80px;
+    }
+
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:28px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+    .logo svg{display:block;width:56px;height:56px}
+    .logo h1{font-family:'Playfair Display', serif;font-size:20px;margin:0}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px}
+    nav a.cta{background:var(--accent);color:white}
+    .menu-toggle{display:none}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:18px}
+    .hero .card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.85));padding:28px;border-radius:var(--radius);box-shadow:0 6px 30px rgba(30,30,30,0.06)}
+    .hero h2{font-family:'Playfair Display', serif;font-size:40px;margin:0 0 10px}
+    .hero p.lead{color:var(--muted);margin:0 0 16px}
+    .hero .ctas{display:flex;gap:12px}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:600}
+    .btn.primary{background:var(--accent);color:white}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06)}
+
+    /* Menu grid */
+    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+    .menu-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--card);box-shadow:0 6px 16px rgba(20,20,20,0.04)}
+    .menu-item svg{width:64px;height:64px;border-radius:10px}
+    .menu-item h4{margin:0;font-size:16px}
+    .price{margin-left:auto;font-weight:700;color:var(--accent-dark)}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+    .photo{height:120px;border-radius:12px;background-size:cover;background-position:center;box-shadow:inset 0 -20px 40px rgba(0,0,0,0.06)}
+
+    /* About & Contact */
+    .two-col{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:26px}
+    .contact form{display:flex;flex-direction:column;gap:10px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid #eee;font:inherit}
+
+    footer{margin-top:34px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.04)}
+    .social{display:flex;gap:10px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .two-col{grid-template-columns:1fr}
+      .menu-grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      nav{display:none}
+      .menu-toggle{display:inline-block}
+    }
+    @media (max-width:560px){
+      .gallery{grid-template-columns:1fr}
+      .logo svg{width:46px;height:46px}
+      .hero h2{font-size:28px}
+    }
+
+    /* tiny accessibility focus styles */
+    a:focus, button:focus, input:focus, textarea:focus{outline:3px solid rgba(180,106,74,0.18);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <!-- Inline SVG logo (unique) -->
+        <a class="logo" href="#home" aria-label="LumenBean Cafe home">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="false">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#ffd7b5"/>
+                <stop offset="100%" stop-color="#b46a4a"/>
+              </linearGradient>
+            </defs>
+            <rect rx="20" width="120" height="120" fill="url(#g1)"/>
+            <g transform="translate(20,24)" fill="#fff">
+              <path d="M12 8c0 6-6 10-6 10s-6-4-6-10a6 6 0 1112 0z" opacity="0.18"></path>
+              <path d="M54 26c0 11-9 20-20 20S14 37 14 26s9-20 20-20 20 9 20 20z" fill="#fff" opacity="0.14"></path>
+              <path d="M36 40c0 3-6 6-12 6s-12-3-12-6v-6c0-8 10-16 12-16s12 8 12 16v6z" fill="#fff"/>
+            </g>
+          </svg>
+          <div>
+            <h1>LumenBean</h1>
+            <div style="font-size:12px;color:var(--muted)">Artisan Cafe</div>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">☰</button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="card">
+        <h2>Handcrafted coffee, quiet corners, bright mornings.</h2>
+        <p class="lead">A sample cafe site built to show responsive layout, tasteful typography, and a clean modern aesthetic you can present to clients.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#menu">View Menu</a>
+          <a class="btn ghost" href="#contact">Reserve a table</a>
+        </div>
+
+        <!-- simple menu preview -->
+        <div class="menu-grid" id="menu" aria-labelledby="menu-title">
+          <div class="menu-item">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="10" fill="#fdf3ec"/><g transform="translate(10,9)"><path d="M6 34c8-1 20-1 22-9 1-7-20-9-22 0" fill="#b46a4a" opacity="0.12"></path></g></svg>
+            <div>
+              <h4>Honey Lavender Latte <span class="muted">— signature</span></h4>
+              <div class="muted">Silky espresso, lavender-infused honey, microfoam</div>
+            </div>
+            <div class="price">Rs. 450</div>
+          </div>
+
+          <div class="menu-item">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="10" fill="#fff6f3"/></svg>
+            <div>
+              <h4>Hazelnut Mocha <span class="muted">— cozy</span></h4>
+              <div class="muted">Dark chocolate, roasted hazelnut, steamed milk</div>
+            </div>
+            <div class="price">Rs. 520</div>
+          </div>
+
+          <div class="menu-item">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="10" fill="#fffaf6"/></svg>
+            <div>
+              <h4>Cinnamon Roll <span class="muted">— pastry</span></h4>
+              <div class="muted">Buttery, house-made, with cream cheese icing</div>
+            </div>
+            <div class="price">Rs. 350</div>
+          </div>
+
+          <div class="menu-item">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="10" fill="#fffbf7"/></svg>
+            <div>
+              <h4>Cold Brew Tonic <span class="muted">— refreshing</span></h4>
+              <div class="muted">Slow-steeped nitro cold brew and sparkling tonic</div>
+            </div>
+            <div class="price">Rs. 420</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- decorative coffee SVG / visual */ -->
+      <div aria-hidden="true">
+        <svg width="100%" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bggrad" x1="0" x2="1"><stop offset="0" stop-color="#fff0e6"/><stop offset="1" stop-color="#fff"/></linearGradient>
+          </defs>
+          <rect rx="24" width="100%" height="100%" fill="url(#bggrad)"/>
+          <g transform="translate(36,40)">
+            <rect x="0" y="0" width="340" height="280" rx="18" fill="#fff" stroke="#f0e7e3"/>
+            <g transform="translate(32,18)">
+              <circle cx="130" cy="90" r="76" fill="#f8e9de"/>
+              <path d="M100 60c0 44 60 44 60 0" fill="#b46a4a" opacity="0.12"></path>
+              <path d="M110 110c-8 12-28 22-34 36a8 8 0 0 0 6 11h120a8 8 0 0 0 6-11c-6-14-26-24-34-36" fill="#fff3ee"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- About + Contact area -->
+    <section class="two-col">
+      <article>
+        <h3 id="about">About LumenBean</h3>
+        <p class="muted">LumenBean is a fictional cafe created as a portfolio sample. The design focuses on warm tones, soft typography and clear information hierarchy that makes it easy for small cafe owners to present their menu, gallery and reservation info online. Replace copy, menu items and images to fit a real business.</p>
+
+        <div class="gallery" id="gallery" aria-label="Gallery of cafe photos">
+          <div class="photo" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23f7efe7\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\' font-family=\'Inter\' fill=\'%23b46a4a\'>Coffee + Light</text></svg>');"></div>
+          <div class="photo" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff4ee\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\' font-family=\'Inter\' fill=\'%23bf7a5a\'>Pastries</text></svg>');"></div>
+          <div class="photo" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff7f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\' font-family=\'Inter\' fill=\'%23c86f4b\'>Cozy Corner</text></svg>');"></div>
+        </div>
+      </article>
+
+      <aside class="contact" id="contact">
+        <h3>Contact / Reserve</h3>
+        <p class="muted">For the demo, the form uses a "mailto:" action. Replace with Formspree or another form endpoint for production.</p>
+        <form action="mailto:citylighthouseandsolarcompany1@gmail.com" method="POST" enctype="text/plain">
+          <label for="name">Name</label>
+          <input id="name" name="name" required placeholder="Your full name" />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+
+          <label for="message">Message (date/time, party size)</label>
+          <textarea id="message" name="message" rows="4" placeholder="Hi — I'd like to reserve..." required></textarea>
+
+          <button class="btn primary" type="submit">Send Request</button>
+        </form>
+
+        <div style="margin-top:14px;font-size:14px;color:var(--muted)">
+          <div><strong>Address</strong><br>38 Lantern Lane, Sample City</div>
+          <div style="margin-top:8px"><strong>Hours</strong><br>Tue–Sun 7:30 am — 6:00 pm</div>
+          <div style="margin-top:8px"><strong>Phone</strong><br>+92 300 000 0000</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="color:var(--muted)">© <strong>LumenBean</strong> — demo site • Built for portfolio</div>
+        <div class="social" aria-hidden="true">
+          <a href="#"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3V2z"/></svg></a>
+          <a href="#"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 5.92a8.6 8.6 0 01-2.54.7A4.48 4.48 0 0021.4 4a8.9 8.9 0 01-2.83 1.1A4.47 4.47 0 0015.5 3c-2.48 0-4.5 2.06-4.5 4.6 0 .36.04.71.12 1.05A12.7 12.7 0 013 4.9a4.6 4.6 0 00-.61 2.32c0 1.6.78 3 1.97 3.84A4.5 4.5 0 013.5 10v.06c0 2.24 1.57 4.1 3.66 4.52-.37.1-.77.15-1.18.15-.28 0-.56-.02-.83-.08.56 1.8 2.16 3.12 4.06 3.16A9 9 0 012 19.54 12.67 12.67 0 008.29 21c7.55 0 11.68-6.48 11.68-12.1 0-.18 0-.36-.02-.54A8.6 8.6 0 0022 5.92z"/></svg></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // small JS: mobile menu toggle + smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      })
+    })
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    if(menuToggle){
+      menuToggle.addEventListener('click', ()=>{
+        const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!expanded));
+        if(nav.style.display === 'flex' || nav.style.display === 'block'){
+          nav.style.display = 'none';
+        } else {
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.position = 'absolute';
+          nav.style.right = '28px';
+          nav.style.top = '72px';
+          nav.style.background = 'white';
+          nav.style.padding = '12px';
+          nav.style.borderRadius = '10px';
+          nav.style.boxShadow = '0 8px 30px rgba(20,20,20,0.08)';
+        }
+      })
+    }
+  </script>
+</body>
+</html>
